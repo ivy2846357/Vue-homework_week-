@@ -6,7 +6,10 @@ export default {
             // modal 設定
             productModal: {},
             // 商品資料存放處
-            tempProduct: {}
+            tempProduct: {},
+            // 加入購物車數量
+            qty: 1,
+            isLoading: ''
         }
     },
     // 從外層取得資料
@@ -34,6 +37,12 @@ export default {
                 .catch(err => {
                     console.log('商品資料取得失敗')
                 })
+        },
+        // 加入商品至購物車(modal版)
+        addProductToCart() {
+            this.$emit('add-cart', this.tempProduct.id, this.qty);
+            // 新增後關閉視窗
+            this.productModal.hide();
         }
     },
     mounted() {

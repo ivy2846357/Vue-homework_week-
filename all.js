@@ -61,7 +61,6 @@ const app = createApp({
                 qty
             }
             this.isLoading = id;
-            console.log(id, this.product);
             // 加入購物車
             axios.post(`${this.url}/v2/api/${this.api_path}/cart`, {
                     "data": cartProductData
@@ -99,7 +98,27 @@ const app = createApp({
                 .catch(err => {
                     console.log('商品刪除失敗');
                 })
-        }
+        },
+        // 變更購物車商品數量
+        updateProductNum(item) {
+            const cartProductData = {
+                product_id: item.id,
+                qty: item.qty
+            }
+            this.isLoading = item.id;
+
+            axios.put(`${this.url}/v2/api/${this.api_path}/cart/${item.id}`, {
+                    "data": cartProductData
+                })
+                .then(res => {
+                    this.cartProduct = res.data.data;
+                    this.getCart();
+                    this.isLoading = '';
+                })
+                .catch(err => {
+                    console.log('商品加入失敗')
+                })
+        },
     },
     // 設定元件資料
     components: {
